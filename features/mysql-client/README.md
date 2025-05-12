@@ -9,7 +9,7 @@ service using the official [MySQL docker image](https://hub.docker.com/_/mysql).
 
 ```json
 "features": {
-    "ghcr.io/rails/devcontainer/features/mysql-client": {}
+    "ghcr.io/rolling-space/devcontainer/features/mysql-client": {}
 }
 ```
 

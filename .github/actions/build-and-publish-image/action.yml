@@ -46,7 +46,7 @@ runs:
         RUBY_VERSION: ${{ inputs.ruby_version }}
         BUILDX_NO_DEFAULT_ATTESTATIONS: true
       with:
-        imageName: ghcr.io/rails/devcontainer/images/ruby
+        imageName: ghcr.io/rolling-space/devcontainer/images/ruby
         imageTag: ${{ env.IMAGE_VERSION }}-${{ inputs.ruby_version }},${{ inputs.ruby_version }}
         subFolder: images/ruby
         push: always

@@ -6,7 +6,7 @@ Installs Ruby, rbenv, and ruby-build as well as the dependencies needed to build
 
 ```json
 "features": {
-    "ghcr.io/rails/devcontainer/features/ruby:1": {
+    "ghcr.io/rolling-space/devcontainer/features/ruby:1": {
         "version": "3.3.0"
     }
 }

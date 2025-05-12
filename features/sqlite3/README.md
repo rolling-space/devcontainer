@@ -6,7 +6,7 @@ Installs needed dependencies for Rails apps using SQLite3.
 
 ```json
 "features": {
-    "ghcr.io/rails/devcontainer/features/sqlite3": {}
+    "ghcr.io/rolling-space/devcontainer/features/sqlite3": {}
 }
 ```
 

@@ -6,7 +6,7 @@ Creates a volume for persisting the installed gems across different containers.
 
 ```json
 "features": {
-  "ghcr.io/rails/devcontainer/features/bundler-cache:1": {}
+  "ghcr.io/rolling-space/devcontainer/features/bundler-cache:1": {}
 }
 ```
 

@@ -6,7 +6,7 @@ Installs libvips, ffmpeg and poppler-utils which are required to use Active Stor
 
 ```json
 "features": {
-    "ghcr.io/rails/devcontainer/features/activestorage": {}
+    "ghcr.io/rolling-space/devcontainer/features/activestorage": {}
 }
 ```
 

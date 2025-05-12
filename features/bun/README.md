@@ -6,7 +6,7 @@ Installs needed dependencies for Rails apps using Bun.
 
 ```json
 "features": {
-    "ghcr.io/rails/devcontainer/features/bun": {}
+    "ghcr.io/rolling-space/devcontainer/features/bun": {}
 }
 ```
 
