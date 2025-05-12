@@ -19,6 +19,6 @@ jobs:
         with:
           publish-features: "true"
           base-path-to-features: "./features"
-          features-namespace: "rails/devcontainer/features"
+          features-namespace: "rolling-space/devcontainer/features"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
