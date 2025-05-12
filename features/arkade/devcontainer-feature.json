@@ -1,0 +1,24 @@
+{
+    "id": "arkade",
+    "version": "0.1.0",
+    "name": "Arkade CLI",
+    "documentationURL": "https://arkade.dev/docs/",
+    "description": "Installs the Arkade CLI, a tool for managing Kubernetes applications.",
+    "options": {
+        "installKubectl": {
+            "type": "boolean",
+            "default": true,
+            "description": "Install kubectl alongside Arkade?"
+        },
+        "installHelm": {
+            "type": "boolean",
+            "default": true,
+            "description": "Install Helm alongside Arkade?"
+        },
+        "installK3s": {
+            "type": "boolean",
+            "default": false,
+            "description": "Install K3s alongside Arkade?"
+        }
+    }
+}
