@@ -1,6 +1,6 @@
 {
     "id": "arkade",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "name": "Arkade CLI",
     "documentationURL": "https://arkade.dev/docs/",
     "description": "Installs the Arkade CLI, a tool for managing Kubernetes applications.",
