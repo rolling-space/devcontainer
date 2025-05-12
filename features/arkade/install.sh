@@ -29,7 +29,4 @@ fi
 echo "Installing Arkade CLI..."
 curl -sSL https://get.arkade.dev | sh
 
-# Move Arkade to the installation directory
-mv arkade $INSTALL_DIR/arkade
-
 echo "Arkade CLI installed successfully."
