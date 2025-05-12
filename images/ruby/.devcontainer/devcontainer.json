@@ -18,6 +18,7 @@
     "ghcr.io/rails/devcontainer/features/ruby": {
       "version": "${localEnv:RUBY_VERSION}"
     },
+    "ghcr.io/rolling-space/devcontainer/features/arkade": {}
   },
   // Set `remoteUser` to `root` to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
   "remoteUser": "vscode"
