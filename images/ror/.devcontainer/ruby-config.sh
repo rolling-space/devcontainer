@@ -1,18 +1,9 @@
-#!/bin/sh
+#!/bin/zsh
 set -e
 
-USERNAME="${USERNAME:-"${_REMOTE_USER:-"automatic"}"}"
-
-apt-get update -y
-apt-get -y install --no-install-recommends libssl-dev libreadline-dev zlib1g-dev autoconf bison build-essential \
- libyaml-dev libncurses5-dev libffi-dev libgdbm-dev libxml2-dev rustc
-
-git clone https://github.com/rbenv/rbenv.git /usr/local/share/rbenv
-git clone https://github.com/rbenv/ruby-build.git /usr/local/share/ruby-build
-
-mkdir -p /root/.rbenv/plugins
-ln -s /usr/local/share/ruby-build /root/.rbenv/plugins/ruby-build
-
+# USERNAME="${USERNAME:-"${_REMOTE_USER:-"automatic"}"}"
+USERNAME="runner"
+RUBY_VERSION="3.4.3"
 if [ "${USERNAME}" != "root" ]; then
     mkdir -p /home/${USERNAME}/.rbenv/plugins
     ln -s /usr/local/share/ruby-build /home/${USERNAME}/.rbenv/plugins/ruby-build
@@ -25,9 +16,17 @@ if [ "${USERNAME}" != "root" ]; then
     if [ -f /home/${USERNAME}/.zshrc ]; then
         echo 'eval "$(rbenv init -)"' >> /home/${USERNAME}/.zshrc
     fi
-fi
 
+    rbenv install $RUBY_VERSION
+    rbenv global $RUBY_VERSION
+else
 su ${USERNAME} -c "rbenv install $RUBY_VERSION"
 su ${USERNAME} -c "rbenv global $RUBY_VERSION"
+fi
 
-rm -rf /var/lib/apt/lists/*
+# Exit gracefully if no files or directories are found
+if [ -d /var/lib/apt/lists ] && [ "$(ls -A /var/lib/apt/lists)" ]; then
+    rm -rf /var/lib/apt/lists/*
+else
+    echo "No files or directories found in /var/lib/apt/lists. Skipping removal."
+fi
