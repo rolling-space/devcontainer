@@ -1,0 +1,32 @@
+{
+  "build": {
+    "dockerfile": "./Dockerfile",
+    "context": "."
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": "true",
+      "username": "coder",
+      "userUid": "10001",
+      "userGid": "10001",
+      "upgradePackages": "true",
+      "configureZshAsDefaultShell": "true"
+    },
+//    "ghcr.io/rails/devcontainer/features/ruby:latest": {
+//      "version": "3.4.3"
+//    },
+//    "ghcr.io/devcontainers/features/git:1": {
+//      "version": "latest",
+//      "ppa": "false"
+//    },
+    "ghcr.io/rails/devcontainer/features/postgres-client": {
+      "version": "17"
+    },
+    "ghcr.io/rolling-space/devcontainer/features/arkade:latest": {}
+  },
+//  containerEnv: {
+//    "USERNAME": "coder"
+//  },
+  // Set `remoteUser` to `root` to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+  "remoteUser": "coder"
+}

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Check if Ruby version is provided
+if [ -z "$1" ]; then
+  echo "Usage: $0 <fullstaq-ruby-version>"
+  exit 1
+fi
+
+RUBY_VERSION=$1
+
+devcontainer build --workspace-folder images/fullstaq-ror --image-name docker.io/rollingspace/fq-ror:$RUBY_VERSION
+# devcontainer build --workspace-folder images/fullstaq-ror --image-name docker.io/rollingspace/fq-ror:3.4.3-jemalloc-bookworm
