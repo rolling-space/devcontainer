@@ -1,0 +1,50 @@
+{
+  "build": {
+    "dockerfile": "./Dockerfile",
+    "context": "."
+    
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": "true",
+      "username": "runner",
+      "userUid": "10001",
+      "userGid": "10001",
+      "upgradePackages": "true",
+      "configureZshAsDefaultShell": "true",
+      "installOhMyZsh": "true",
+      "ohMyZshPlugins": [
+        "zsh-autosuggestions",
+        "zsh-syntax-highlighting"
+      ],
+      "nonFreePackages": "false"
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+			"moby": true,
+			"azureDnsAutoDetection": true,
+			"installDockerBuildx": true,
+			"installDockerComposeSwitch": true,
+			"disableIp6tables": true,
+			"version": "latest",
+			"dockerDashComposeVersion": "v2",
+			"enableNonRootDocker": "true"
+		},
+    "ghcr.io/rails/devcontainer/features/postgres-client": {
+      "version": "17"
+    },
+    "ghcr.io/rolling-space/devcontainer/features/arkade:latest": {},
+    "ghcr.io/jsburckhardt/devcontainer-features/copa:1": {},
+    "ghcr.io/jsburckhardt/devcontainer-features/cyclonedx:1": {},
+    "ghcr.io/jsburckhardt/devcontainer-features/kyverno:1": {},
+    "ghcr.io/jsburckhardt/devcontainer-features/skopeo:1": {},
+    "ghcr.io/jsburckhardt/devcontainer-features/gic:1": {},
+//    "ghcr.io/stuartleeks/dev-container-features/add-host:1": {
+//			"host_ip": "192.168.65.1"
+//		},
+		"ghcr.io/stuartleeks/dev-container-features/shell-history:0": {}
+
+  },
+  // Set `remoteUser` to `root` to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+  "remoteUser": "node",
+  "containerUser": "node"
+}

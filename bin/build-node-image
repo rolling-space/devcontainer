@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Check if Node version is provided
+if [ -z "$1" ]; then
+  echo "Usage: $0 <node-version>"
+  exit 1
+fi
+
+NODE_VERSION=$1
+
+devcontainer build --workspace-folder images/node --image-name ghcr.io/rolling-space/devcontainer/images/node:$NODE_VERSION "$@"
