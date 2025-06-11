@@ -43,7 +43,7 @@ build-buildx-with-cache:
     - docker buildx rm cached-builder
 
 build-buildx-custom-image:
-  image: ghcr.io/rolling-space/devcontainer/images/devcontainer-cli:latest
+  image: gitlab-registry.ams-ix.net/hub/lasers/devcontainer/devcontainer-cli:latest
   services:
     - docker:24.0.5-dind
   stage: build
