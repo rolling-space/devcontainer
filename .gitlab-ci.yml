@@ -39,18 +39,20 @@ build-buildx-with-cache:
   after_script:
     - docker buildx rm cached-builder
 
-.build-buildx-with-cache-custom:
+build-buildx-with-cache-custom:
   image: ghcr.io/rolling-space/devcontainer/images/devcontainer-cli:latest
   services:
     - docker:dind
   stage: build
-  tags:
-    - docker
+
+    - docker buildx create --use --driver docker-container cached-builder
   before_script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker buildx create --use --driver docker-container --name cached-custom-builder
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - docker context create cached-builder
+    - docker buildx create --use --driver docker-container --name cached-builder-custom
     - docker buildx inspect --bootstrap
   variables:
+    DOCKER_TLS_CERTDIR: "/certs"
     CACHE_IMAGE: $CI_REGISTRY_IMAGE:custom-cache
   script:
     - docker buildx build
