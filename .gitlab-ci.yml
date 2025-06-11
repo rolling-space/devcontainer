@@ -1,14 +1,29 @@
 variables:
   DOCKER_TLS_CERTDIR: "/certs"
-  CACHE_IMAGE: $CI_REGISTRY_IMAGE:cache
-  DOCKER_HOST: tcp://localhost:2375
+  DOCKER_HOST: tcp://docker:2375
   DOCKER_DRIVER: overlay2
 
-build-with-cache:
-  image: docker:latest
+default:
+  image: docker:24.0.5
   services:
-    - docker:dind
-
+    - docker:24.0.5-dind
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_DRIVER: overlay2
+  before_script:
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+  tags:
+    - docker
+    - dind
+    - buildx
+    - builder
+build-buildx-with-cache:
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+  variables:
+    CACHE_IMAGE: $CI_REGISTRY_IMAGE:cache
   stage: build
   tags:
     - docker
@@ -25,7 +40,7 @@ build-with-cache:
   after_script:
     - docker buildx rm cached-builder
 
-build-with-cache-custom:
+.build-buildx-with-cache-custom:
   image: ghcr.io/rolling-space/devcontainer/images/devcontainer-cli:latest
   services:
     - docker:dind
@@ -46,3 +61,27 @@ build-with-cache-custom:
       --push .
   after_script:
     - docker buildx rm cached-custom-builder
+
+build-buildah:
+  stage: build
+  image: quay.io/buildah/stable
+  variables:
+    # Use vfs with buildah. Docker offers overlayfs as a default, but Buildah
+    # cannot stack overlayfs on top of another overlayfs filesystem.
+    STORAGE_DRIVER: vfs
+    # Write all image metadata in the docker format, not the standard OCI format.
+    # Newer versions of docker can handle the OCI format, but older versions, like
+    # the one shipped with Fedora 30, cannot handle the format.
+    BUILDAH_FORMAT: docker
+    FQ_IMAGE_NAME: "$CI_REGISTRY_IMAGE/test"
+  before_script:
+    # GitLab container registry credentials taken from the
+    # [predefined CI/CD variables](../variables/_index.md#predefined-cicd-variables)
+    # to authenticate to the registry.
+    - echo "$CI_REGISTRY_PASSWORD" | buildah login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+  script:
+    - buildah images
+    - buildah build -t $FQ_IMAGE_NAME
+    - buildah images
+    - buildah push $FQ_IMAGE_NAME
+
