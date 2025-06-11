@@ -43,11 +43,12 @@ build-buildx-with-cache:
     - docker buildx rm cached-builder
 
 build-buildx-custom-image:
-  image: gitlab-registry.ams-ix.net/hub/lasers/devcontainer/devcontainer-cli:latest
+  image:
+    name: gitlab-registry.ams-ix.net/hub/lasers/devcontainer/devcontainer-cli:latest
+    entrypoint: ["/usr/local/share/docker-init.sh"]
   services:
-    - docker:24.0.5-dind
+    - docker:28.1.1-dind
   stage: build
-
   before_script:
     - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - docker context create cached-builder-custom
@@ -68,7 +69,8 @@ build-buildx-custom-image:
 
 build-buildah:
   stage: build
-  image: quay.io/buildah/stable
+  image:
+    name: quay.io/buildah/stable
   variables:
     # Use vfs with buildah. Docker offers overlayfs as a default, but Buildah
     # cannot stack overlayfs on top of another overlayfs filesystem.
