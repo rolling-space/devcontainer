@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GitLabRepoState">
+    <option name="selectedRepo">
+      <Repo>
+        <option name="authType" value="BASIC" />
+        <option name="projectPath" value="hub/lasers/devcontainer" />
+        <option name="type" value="SELF" />
+        <option name="url" value="https://gitlab.ams-ix.net" />
+      </Repo>
+    </option>
+    <option name="repos">
+      <set>
+        <Repo>
+          <option name="authType" value="BASIC" />
+          <option name="projectPath" value="ams-ix/ix-api/ix-api-server" />
+          <option name="type" value="SELF" />
+          <option name="url" value="https://gitlab.ams-ix.net" />
+        </Repo>
+        <Repo>
+          <option name="authType" value="BASIC" />
+          <option name="projectPath" value="ams-ix/ix-api/oss-synchronizer" />
+          <option name="type" value="SELF" />
+          <option name="url" value="https://gitlab.ams-ix.net" />
+        </Repo>
+        <Repo>
+          <option name="authType" value="BASIC" />
+          <option name="projectPath" value="ams-ix/oss-ui" />
+          <option name="type" value="SELF" />
+          <option name="url" value="https://gitlab.ams-ix.net" />
+        </Repo>
+        <Repo>
+          <option name="authType" value="BASIC" />
+          <option name="projectPath" value="hub/lasers/devcontainer" />
+          <option name="type" value="SELF" />
+          <option name="url" value="https://gitlab.ams-ix.net" />
+        </Repo>
+      </set>
+    </option>
+  </component>
+</project>
