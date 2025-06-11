@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Check if Ruby version is provided
+if [ -z "$1" ]; then
+  echo "Usage: $0 <devcontainer-cli-version>"
+  exit 1
+fi
+
+DC_CLI_VERSION=$1
+
+devcontainer build --workspace-folder images/devcontainer-cli --image-name ghcr.io/rolling-space/devcontainer/images/devcontainer-cli:$DC_CLI_VERSION

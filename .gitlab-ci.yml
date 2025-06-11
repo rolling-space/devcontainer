@@ -1,0 +1,41 @@
+variables:
+  DOCKER_TLS_CERTDIR: "/certs"
+  CACHE_IMAGE: $CI_REGISTRY_IMAGE:cache
+
+build-with-cache:
+  image: docker:latest
+  services:
+    - docker:dind
+  stage: build
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker buildx create --use --driver docker-container --name cached-builder
+    - docker buildx inspect --bootstrap
+  script:
+    - docker buildx build
+      --cache-from type=registry,ref=$CACHE_IMAGE
+      --cache-to type=registry,ref=$CACHE_IMAGE,mode=max
+      --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+      --push .
+  after_script:
+    - docker buildx rm cached-builder
+
+build-with-cache-custom:
+  image: ghcr.io/rolling-space/devcontainer/images/devcontainer-cli:latest
+  services:
+    - docker:dind
+  stage: build
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker buildx create --use --driver docker-container --name cached-custom-builder
+    - docker buildx inspect --bootstrap
+  variables:
+    CACHE_IMAGE: $CI_REGISTRY_IMAGE:custom-cache
+  script:
+    - docker buildx build
+      --cache-from type=registry,ref=$CACHE_IMAGE
+      --cache-to type=registry,ref=$CACHE_IMAGE,mode=max
+      --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA-custom
+      --push .
+  after_script:
+    - docker buildx rm cached-builder
