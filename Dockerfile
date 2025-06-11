@@ -2,7 +2,7 @@ ARG SYSTEM_RUBY_VERSION=3.4.3
 ARG SYSTEM_RUBY_VARIANT=jemalloc
 ARG DEBIAN_EDITION=bookworm
 
-FROM --platform=linux/amd64 quay.io/evl.ms/fullstaq-ruby:${SYSTEM_RUBY_VERSION}-${SYSTEM_RUBY_VARIANT}-${DEBIAN_EDITION}
+FROM quay.io/evl.ms/fullstaq-ruby:${SYSTEM_RUBY_VERSION}-${SYSTEM_RUBY_VARIANT}-${DEBIAN_EDITION}
 
 ARG USERNAME=runner
 
@@ -15,7 +15,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && curl -SLf https://raw.githubusercontent.com/fullstaq-labs/fullstaq-ruby-server-edition/main/fullstaq-ruby.asc | apt-key add - \
     && echo "deb https://apt.fullstaqruby.org debian-${DEBIAN_VERSION} main" > /etc/apt/sources.list.d/fullstaq-ruby.list \
     && apt-get update -q \
-    && apt-get install --assume-yes -q --no-install-recommends fullstaq-ruby-common fullstaq-ruby-${RUBY_VERSION}-${RUBY_VARIANT} unzip sudo \
+    && apt-get install --assume-yes -q --no-install-recommends fullstaq-ruby-common fullstaq-ruby-${RUBY_VERSION} unzip sudo \
     && echo 'eval "$(rbenv init - )"' >> /etc/bash.bashrc \
     && apt-get autoremove --assume-yes \
     && rm -rf /var/lib/apt/lists \
