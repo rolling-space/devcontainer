@@ -1,22 +1,47 @@
-# Ruby (via rbenv)
+# Ruby
 
-Installs Ruby, rbenv, and ruby-build as well as the dependencies needed to build Ruby.
+Installs Ruby and a version manager (mise or rbenv) along with the dependencies needed to build Ruby.
 
 ## Example Usage
 
+### Using mise (default)
+
 ```json
 "features": {
-    "ghcr.io/rolling-space/devcontainer/features/ruby:1": {
+    "ghcr.io/rails/devcontainer/features/ruby:1": {
         "version": "3.3.0"
+    }
+}
+```
+
+### Using rbenv
+
+```json
+"features": {
+    "ghcr.io/rails/devcontainer/features/ruby:1": {
+        "version": "3.3.0",
+        "versionManager": "rbenv"
+    }
+}
+```
+
+### Using mise explicitly
+
+```json
+"features": {
+    "ghcr.io/rails/devcontainer/features/ruby:1": {
+        "version": "3.3.0",
+        "versionManager": "mise"
     }
 }
 ```
 
 ## Options
 
-| Options Id | Description | Type |
-|-----|-----|-----|
-| version | The version of ruby to be installed | string |
+| Options Id | Description | Type | Default Value |
+|-----|-----|-----|-----|
+| version | The version of ruby to be installed | string | 3.4.1 |
+| versionManager | The version manager to use for Ruby (mise or rbenv) | string | mise |
 
 ## Customizations
 

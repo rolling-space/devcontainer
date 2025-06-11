@@ -9,15 +9,14 @@
       "username": "vscode",
       "userUid": "1000",
       "userGid": "1000",
-      "upgradePackages": "true",
-      "configureZshAsDefaultShell": "true"
+      "upgradePackages": "true"
     },
     "ghcr.io/devcontainers/features/git:1": {
       "version": "latest",
       "ppa": "false"
     },
     "ghcr.io/rails/devcontainer/features/ruby": {
-      "version": "3.4.3"
+      "version": "${localEnv:RUBY_VERSION}"
     },
     "ghcr.io/rolling-space/devcontainer/features/arkade:latest": {}
   },
