@@ -1,13 +1,14 @@
 variables:
   DOCKER_TLS_CERTDIR: "/certs"
   CACHE_IMAGE: $CI_REGISTRY_IMAGE:cache
-  DOCKER_HOST: tcp://docker:2375
+  DOCKER_HOST: tcp://localhost:2375
   DOCKER_DRIVER: overlay2
 
 build-with-cache:
   image: docker:latest
   services:
     - docker:dind
+
   stage: build
   tags:
     - docker
@@ -44,4 +45,4 @@ build-with-cache-custom:
       --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA-custom
       --push .
   after_script:
-    - docker buildx rm cached-builder
+    - docker buildx rm cached-custom-builder
