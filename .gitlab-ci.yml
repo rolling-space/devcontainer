@@ -25,8 +25,9 @@ build-buildx-with-cache:
   tags:
     - docker
   before_script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker buildx create --use --driver docker-container --name cached-builder
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - docker context create cached-builder
+    - docker buildx create --use --driver docker-container cached-builder
     - docker buildx inspect --bootstrap
   script:
     - docker buildx build
