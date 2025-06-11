@@ -25,6 +25,9 @@ build-buildx-with-cache:
   stage: build
   tags:
     - docker
+    - dind
+    - buildx
+    - builder
   before_script:
     - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - docker context create cached-builder
@@ -34,34 +37,34 @@ build-buildx-with-cache:
     - docker buildx build
       --cache-from type=registry,ref=$CACHE_IMAGE
       --cache-to type=registry,ref=$CACHE_IMAGE,mode=max
-      --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+      --tag $CI_REGISTRY_IMAGE/buildx:$CI_COMMIT_SHA
       --push .
   after_script:
     - docker buildx rm cached-builder
 
-build-buildx-with-cache-custom:
+build-buildx-custom-image:
   image: ghcr.io/rolling-space/devcontainer/images/devcontainer-cli:latest
   services:
-    - docker:dind
+    - docker:24.0.5-dind
   stage: build
 
-    - docker buildx create --use --driver docker-container cached-builder
   before_script:
     - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-    - docker context create cached-builder
-    - docker buildx create --use --driver docker-container --name cached-builder-custom
+    - docker context create cached-builder-custom
+    - docker buildx create --use --driver docker-container --name buildx-custom cached-builder-custom
     - docker buildx inspect --bootstrap
   variables:
     DOCKER_TLS_CERTDIR: "/certs"
-    CACHE_IMAGE: $CI_REGISTRY_IMAGE:custom-cache
+    CACHE_IMAGE: $CI_REGISTRY_IMAGE:cached-builder-custom
   script:
     - docker buildx build
       --cache-from type=registry,ref=$CACHE_IMAGE
       --cache-to type=registry,ref=$CACHE_IMAGE,mode=max
-      --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA-custom
+      --tag $CI_REGISTRY_IMAGE/dc-cli:$CI_COMMIT_SHA
       --push .
   after_script:
-    - docker buildx rm cached-custom-builder
+    - docker context rm cached-builder-custom
+    - docker buildx rm cached-builder-custom
 
 build-buildah:
   stage: build
@@ -74,7 +77,7 @@ build-buildah:
     # Newer versions of docker can handle the OCI format, but older versions, like
     # the one shipped with Fedora 30, cannot handle the format.
     BUILDAH_FORMAT: docker
-    FQ_IMAGE_NAME: "$CI_REGISTRY_IMAGE/test"
+    FQ_IMAGE_NAME: "$CI_REGISTRY_IMAGE/buildah:$CI_COMMIT_SHA"
   before_script:
     # GitLab container registry credentials taken from the
     # [predefined CI/CD variables](../variables/_index.md#predefined-cicd-variables)
