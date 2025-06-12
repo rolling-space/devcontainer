@@ -44,7 +44,7 @@ build-buildx-with-cache:
 
 build-buildx-custom-image:
   image:
-    name: gitlab-registry.ams-ix.net/hub/lasers/devcontainer/devcontainer-cli:latest
+    name: ghcr.io/rolling-space/devcontainer/images/devcontainer-cli:latest
     entrypoint: ["/usr/local/share/docker-init.sh"]
   services:
     - docker:28.1.1-dind
